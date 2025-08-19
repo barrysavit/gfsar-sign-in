@@ -1,0 +1,653 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+:root {
+  --primary-color: #4a90e2;
+  --primary-hover: #357abd;
+  --background-color: #f4f7f9;
+  --card-background: #ffffff;
+  --text-color: #333;
+  --subtle-text-color: #666;
+  --border-color: #dde4e8;
+  --signin-color: #4caf50;
+  --signin-hover: #388e3c;
+  --signout-color: #ffc107;
+  --signout-hover: #ffa000;
+  --error-color: #d32f2f;
+  --error-hover: #b71c1c;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 100%;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+header {
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+header h2.task-number {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--subtle-text-color);
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+header p {
+    color: var(--subtle-text-color);
+    font-size: 1.1rem;
+    margin-top: 0.25rem;
+}
+
+.header-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.primary-action-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  justify-items: center;
+  width: 100%;
+}
+
+.card {
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+button:disabled {
+    background-color: #b0c4de;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.add-member-btn, .edit-list-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: white;
+}
+
+.add-member-btn {
+  background-color: var(--primary-color);
+}
+.add-member-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.edit-list-btn {
+  background-color: var(--subtle-text-color);
+}
+.edit-list-btn:hover {
+  background-color: var(--text-color);
+}
+
+.timestamp {
+    font-size: 0.875rem;
+    color: var(--subtle-text-color);
+    white-space: nowrap;
+}
+
+.signout-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    background-color: var(--signout-color);
+    color: var(--text-color);
+}
+.signout-btn:hover:not(:disabled) {
+    background-color: var(--signout-hover);
+}
+
+/* Page Actions Footer */
+.page-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.new-task-btn {
+  background-color: var(--signin-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.new-task-btn:hover:not(:disabled) {
+  background-color: var(--signin-hover);
+}
+
+.clear-log-btn {
+  background-color: var(--error-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.clear-log-btn:hover:not(:disabled) {
+  background-color: var(--error-hover);
+}
+
+.download-btn {
+  background-color: #f0f0f0;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.download-btn:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+.download-btn:disabled {
+  background-color: #f9f9f9;
+  border-color: #eee;
+  color: #ccc;
+}
+
+/* Log Table Styles */
+.log-container {
+  width: 100%;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.log-table th, .log-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.log-table th {
+  font-weight: 600;
+  background-color: #f9fafb;
+  position: sticky;
+  top: 0;
+}
+
+.log-table tbody tr:hover {
+  background-color: #f4f7f9;
+}
+
+.log-table td {
+  color: var(--subtle-text-color);
+}
+.log-table td[data-label="Member"] {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.log-action-cell {
+  text-align: right;
+}
+
+.empty-state {
+    color: var(--subtle-text-color);
+    font-style: italic;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background-color: var(--card-background);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.modal-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.modal-instructions {
+  color: var(--subtle-text-color);
+  font-size: 0.875rem;
+  margin-top: -1rem;
+  line-height: 1.4;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  background-color: white;
+}
+
+select.modal-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  cursor: pointer;
+}
+
+.modal-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.25);
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: 0.875rem;
+  margin-top: -0.25rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.cancel-btn, .save-btn, .delete-btn, .confirm-action-btn {
+  padding: 0.6rem 1.25rem;
+}
+
+.cancel-btn {
+  background-color: #f0f0f0;
+  color: var(--text-color);
+  border: 1px solid #ccc;
+}
+.cancel-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.save-btn {
+  background-color: var(--primary-color);
+}
+.save-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.delete-btn {
+  background-color: var(--error-color);
+  margin-right: auto;
+}
+.delete-btn:hover {
+  background-color: var(--error-hover);
+}
+
+.modal-member-list-container {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  max-height: 40vh;
+  overflow-y: auto;
+  padding: 0.5rem;
+  background-color: #f9fafb;
+}
+
+.modal-member-list {
+  list-style-type: none;
+}
+
+.modal-member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-member-item:last-child {
+  border-bottom: none;
+}
+
+.modal-member-item span {
+  flex-grow: 1;
+  padding-right: 1rem;
+}
+
+.modal-member-delete-btn {
+  background: transparent;
+  color: var(--subtle-text-color);
+  padding: 0.25rem;
+  width: auto;
+  height: auto;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+}
+
+.modal-member-delete-btn:hover {
+  background-color: #fde8e8;
+  color: var(--error-color);
+}
+
+.empty-state-modal {
+  color: var(--subtle-text-color);
+  text-align: center;
+  padding: 2rem 1rem;
+  font-style: italic;
+}
+
+/* Confirmation Modal */
+.modal-content-confirm {
+  max-width: 450px;
+  gap: 0.5rem;
+}
+.confirm-modal-message {
+  font-size: 1rem;
+  color: var(--text-color);
+  line-height: 1.5;
+  margin: 1rem 0;
+}
+.confirm-action-btn {
+  background-color: var(--error-color);
+}
+.confirm-action-btn:hover {
+  background-color: var(--error-hover);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  .card {
+    padding: 1rem 1.5rem;
+  }
+  
+  .header-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .log-table thead {
+    display: none;
+  }
+  
+  .log-table tbody, .log-table tr, .log-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .log-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+  
+  .log-table td {
+    border-bottom: 1px solid var(--border-color);
+    padding-left: 50%;
+    position: relative;
+    text-align: right;
+  }
+
+  .log-table td:last-child {
+    border-bottom: none;
+  }
+
+  .log-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    width: 45%;
+    padding-right: 1rem;
+    font-weight: 600;
+    text-align: left;
+    color: var(--text-color);
+  }
+}
+
+/* Print Styles */
+@media print {
+  body, .app-container {
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+  }
+
+  header, .header-controls, .modal-overlay, .page-actions, .signout-btn {
+    display: none !important;
+  }
+
+  #root {
+    padding: 1rem;
+  }
+
+  .main-content {
+    display: block;
+    gap: 0;
+  }
+
+  .card {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+
+  .card-header {
+    border-bottom: 2px solid #000;
+    padding-bottom: 0.5rem;
+  }
+
+  .card-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .app-container::before {
+    content: 'Grand Forks Search and Rescue - Attendance Log';
+    display: block;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+
+  .log-container {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .log-table {
+    font-size: 10pt;
+  }
+
+  .log-table th {
+    background-color: #eee;
+    color: #000;
+  }
+  
+  .log-table th, .log-table td {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+  }
+
+  /* Reset responsive table styles for print */
+  .log-table thead {
+    display: table-header-group;
+  }
+  
+  .log-table tbody, .log-table tr, .log-table td {
+    display: table-cell; /* Revert for table cells */
+    width: auto;
+  }
+  .log-table tbody { display: table-row-group; }
+  .log-table tr { display: table-row; }
+
+  .log-table tr {
+    margin-bottom: 0;
+    border: none;
+    overflow: visible;
+  }
+  
+  .log-table td {
+    border-bottom: 1px solid #ccc;
+    padding-left: 0.5rem;
+    position: static;
+    text-align: left;
+  }
+  
+  .log-table tr:last-child td {
+      border-bottom: none;
+  }
+
+  .log-table td::before {
+    display: none;
+  }
+}
