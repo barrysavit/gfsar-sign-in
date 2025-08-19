@@ -11,13 +11,14 @@
   --text-color: #333;
   --subtle-text-color: #666;
   --border-color: #dde4e8;
-  --signin-color: #4caf50;
-  --signin-hover: #388e3c;
-  --signout-color: #ffc107;
-  --signout-hover: #ffa000;
+  --success-color: #4caf50;
+  --success-hover: #388e3c;
+  --warning-color: #ffc107;
+  --warning-hover: #ffa000;
   --error-color: #d32f2f;
   --error-hover: #b71c1c;
-  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --info-color: #2196f3;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   --border-radius: 8px;
 }
 
@@ -53,30 +54,39 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  position: relative;
 }
 
 header {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-logo {
+  color: var(--primary-color);
 }
 
 header h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: var(--text-color);
 }
 
 header h2.task-number {
   font-size: 1.5rem;
   font-weight: 500;
   color: var(--subtle-text-color);
-  margin-top: 0.25rem;
+  margin-top: 0;
   margin-bottom: 0.25rem;
 }
 
 header p {
     color: var(--subtle-text-color);
     font-size: 1.1rem;
-    margin-top: 0.25rem;
+    margin-top: 0;
 }
 
 .header-controls {
@@ -121,10 +131,25 @@ header p {
   margin-bottom: 0.5rem;
 }
 
-h2 {
+.card-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card-header-title h2 {
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0;
+}
+
+.active-member-count {
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 1rem;
 }
 
 button {
@@ -136,15 +161,18 @@ button {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+  transition: all 0.2s ease-in-out;
 }
 
 button:hover:not(:disabled) {
   background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 button:active:not(:disabled) {
-  transform: scale(0.98);
+  transform: translateY(0px) scale(0.98);
+  box-shadow: none;
 }
 
 button:disabled {
@@ -153,20 +181,21 @@ button:disabled {
     opacity: 0.7;
 }
 
-.header-actions {
+.header-actions-group {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.add-member-btn, .edit-list-btn {
+.add-member-btn,
+.edit-list-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
   color: white;
 }
 
@@ -184,20 +213,25 @@ button:disabled {
   background-color: var(--text-color);
 }
 
+.add-member-btn svg, .edit-list-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
 .timestamp {
     font-size: 0.875rem;
-    color: var(--subtle-text-color);
+    color: var(--text-color);
     white-space: nowrap;
 }
 
 .signout-btn {
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
-    background-color: var(--signout-color);
+    background-color: var(--warning-color);
     color: var(--text-color);
 }
 .signout-btn:hover:not(:disabled) {
-    background-color: var(--signout-hover);
+    background-color: var(--warning-hover);
 }
 
 /* Page Actions Footer */
@@ -212,13 +246,13 @@ button:disabled {
 }
 
 .new-task-btn {
-  background-color: var(--signin-color);
+  background-color: var(--success-color);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 .new-task-btn:hover:not(:disabled) {
-  background-color: var(--signin-hover);
+  background-color: var(--success-hover);
 }
 
 .clear-log-btn {
@@ -248,53 +282,94 @@ button:disabled {
   color: #ccc;
 }
 
-/* Log Table Styles */
+/* Log List Styles */
 .log-container {
   width: 100%;
   max-height: 60vh;
   overflow-y: auto;
 }
 
-.log-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
+.log-list {
+  list-style: none;
 }
 
-.log-table th, .log-table td {
+.log-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.75rem 1rem;
-  text-align: left;
   border-bottom: 1px solid var(--border-color);
+  gap: 1rem;
 }
 
-.log-table th {
-  font-weight: 600;
-  background-color: #f9fafb;
-  position: sticky;
-  top: 0;
+.log-list-item:last-child {
+  border-bottom: none;
 }
 
-.log-table tbody tr:hover {
-  background-color: #f4f7f9;
+.member-details {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.log-table td {
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.log-list-item.status-signedin .status-dot {
+  background-color: var(--success-color);
+}
+
+.log-list-item.status-signedout .status-dot {
+  background-color: var(--subtle-text-color);
+}
+
+.log-list-item.status-signedout {
   color: var(--subtle-text-color);
 }
-.log-table td[data-label="Member"] {
-  color: var(--text-color);
-  font-weight: 500;
+
+.log-list-item.status-signedout .member-name {
+  color: var(--subtle-text-color);
 }
 
-.log-action-cell {
-  text-align: right;
+.log-list-item.status-signedout .timestamp {
+  color: var(--subtle-text-color);
+}
+
+.member-name {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.session-details {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .empty-state {
     color: var(--subtle-text-color);
-    font-style: italic;
     text-align: center;
-    padding: 2rem 0;
+    padding: 3rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.empty-state svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    margin: 0;
 }
 
 /* Modal Styles */
@@ -492,6 +567,61 @@ select.modal-input {
   background-color: var(--error-hover);
 }
 
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.toast {
+  padding: 1rem 1.5rem;
+  color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  font-weight: 500;
+  animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-in 2.7s forwards;
+  min-width: 250px;
+  text-align: center;
+}
+
+.toast-success {
+  background-color: var(--success-color);
+}
+
+.toast-error {
+  background-color: var(--error-color);
+}
+
+.toast-info {
+  background-color: var(--info-color);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -512,42 +642,11 @@ select.modal-input {
     align-items: stretch;
   }
 
-  .log-table thead {
-    display: none;
-  }
-  
-  .log-table tbody, .log-table tr, .log-table td {
-    display: block;
-    width: 100%;
-  }
-
-  .log-table tr {
-    margin-bottom: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-  }
-  
-  .log-table td {
-    border-bottom: 1px solid var(--border-color);
-    padding-left: 50%;
-    position: relative;
-    text-align: right;
-  }
-
-  .log-table td:last-child {
-    border-bottom: none;
-  }
-
-  .log-table td::before {
-    content: attr(data-label);
-    position: absolute;
+  .toast-container {
+    top: 1rem;
+    right: 1rem;
     left: 1rem;
-    width: 45%;
-    padding-right: 1rem;
-    font-weight: 600;
-    text-align: left;
-    color: var(--text-color);
+    align-items: stretch;
   }
 }
 
@@ -559,7 +658,7 @@ select.modal-input {
     margin: 0;
   }
 
-  header, .header-controls, .modal-overlay, .page-actions, .signout-btn {
+  header, .header-controls, .modal-overlay, .page-actions, .signout-btn, .toast-container {
     display: none !important;
   }
 
@@ -598,56 +697,16 @@ select.modal-input {
     font-weight: bold;
     margin-bottom: 2rem;
   }
+  
+  .task-number-print {
+    display: block;
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
 
   .log-container {
     max-height: none;
     overflow-y: visible;
-  }
-
-  .log-table {
-    font-size: 10pt;
-  }
-
-  .log-table th {
-    background-color: #eee;
-    color: #000;
-  }
-  
-  .log-table th, .log-table td {
-    padding: 0.5rem;
-    border-bottom: 1px solid #ccc;
-  }
-
-  /* Reset responsive table styles for print */
-  .log-table thead {
-    display: table-header-group;
-  }
-  
-  .log-table tbody, .log-table tr, .log-table td {
-    display: table-cell; /* Revert for table cells */
-    width: auto;
-  }
-  .log-table tbody { display: table-row-group; }
-  .log-table tr { display: table-row; }
-
-  .log-table tr {
-    margin-bottom: 0;
-    border: none;
-    overflow: visible;
-  }
-  
-  .log-table td {
-    border-bottom: 1px solid #ccc;
-    padding-left: 0.5rem;
-    position: static;
-    text-align: left;
-  }
-  
-  .log-table tr:last-child td {
-      border-bottom: none;
-  }
-
-  .log-table td::before {
-    display: none;
   }
 }
